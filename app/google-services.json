@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "889076677144",
+    "firebase_url": "https://dclean-b69ee.firebaseio.com",
+    "project_id": "dclean-b69ee",
+    "storage_bucket": "dclean-b69ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889076677144:android:202aafdcc3b473e8",
+        "android_client_info": {
+          "package_name": "com.kazishihan.tourmate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889076677144-34ie9ouddl0mpls47h98m546ro2n3s7q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kazishihan.tourmate",
+            "certificate_hash": "56845c731302b7a1731d3ab657bd6a225e72b055"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDamf-kvy94m-CnTVaisbL9dOQ39w1nXL4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889076677144-ol69phfp0qtvtdtn0saej59o78nl6a8b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
