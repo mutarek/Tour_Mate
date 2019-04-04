@@ -6,12 +6,12 @@
     <group android:checkableBehavior="single">
         <item
             android:iconTint="@color/mainColor"
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_Weather"
             android:icon="@drawable/weather"
             android:title="Weather" />
         <item
             android:iconTint="@color/mainColor"
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_Nearme"
             android:icon="@drawable/nearme"
             android:title="Near Me" />
 
