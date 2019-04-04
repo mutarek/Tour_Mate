@@ -14,6 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -93,6 +96,18 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_Logout) {
 
+            FirebaseAuth.getInstance().signOut();
+
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                // User is signed in
+
+            } else {
+                // User is signed out
+                   Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                   startActivity(intent);
+            }
 
         }
         else if (id == R.id.nav_share) {
