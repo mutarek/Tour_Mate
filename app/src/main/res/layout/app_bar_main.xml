@@ -22,15 +22,15 @@
 
     <include layout="@layout/content_main" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:src="@drawable/plusicon"
-        android:tint="@color/white"
-        android:backgroundTint="@color/mainColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="60dp"
-        android:layout_marginRight="20dp"/>
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab"-->
+        <!--android:src="@drawable/plusicon"-->
+        <!--android:tint="@color/white"-->
+        <!--android:backgroundTint="@color/mainColor"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:layout_marginBottom="60dp"-->
+        <!--android:layout_marginRight="20dp"/>-->
 
 </android.support.design.widget.CoordinatorLayout>

@@ -42,18 +42,18 @@ public class MainActivity extends AppCompatActivity
         loaddefaultfragment();
 
         ////// floating button addd trips action
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
-                bottomSheet_addTrip = new BottomSheet_AddTrip();
-                bottomSheet_addTrip.show(getSupportFragmentManager(),"BootmSheet_addtrip");
-
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+////                        .setAction("Action", null).show();
+//
+//                bottomSheet_addTrip = new BottomSheet_AddTrip();
+//                bottomSheet_addTrip.show(getSupportFragmentManager(),"BootmSheet_addtrip");
+//
+//            }
+//        });
 
 
 
@@ -64,17 +64,58 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     private void loaddefaultfragment() {
-        TripFragment tripFragment  = new TripFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout_id,tripFragment);
-        fragmentTransaction.commit();
+//        TripFragment tripFragment  = new TripFragment();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.frame_layout_id,tripFragment);
+//        fragmentTransaction.commit();
     }
+
+//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+//
+//        @Override
+//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            switch (item.getItemId()) {
+//                case R.id.tripNavID:
+//                    loaddefaultfragment();
+//                    return true;
+//                case R.id.memoriesNavID:
+//                    loadmemoriesfragment();
+//                    return true;
+//
+//                case R.id.walletNavID:
+//                    loadwalletfragment();
+//                    return true;
+//            }
+//            return false;
+//        }
+//    };
+
+//    private void loadwalletfragment() {
+//        MemoryFragment memoryFragment  = new MemoryFragment();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.frame_layout_id,memoryFragment);
+//        fragmentTransaction.commit();
+//    }
+//
+//    private void loadmemoriesfragment() {
+//        WalletFragment walletFragment  = new WalletFragment();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.frame_layout_id,walletFragment);
+//        fragmentTransaction.commit();
+//    }
+
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -82,35 +123,36 @@ public class MainActivity extends AppCompatActivity
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.tripNavID:
-                    loaddefaultfragment();
+
+                    TripFragment tripFragment  = new TripFragment();
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_layout_id,tripFragment);
+                    fragmentTransaction.commit();
+
                     return true;
                 case R.id.memoriesNavID:
-                    loadmemoriesfragment();
+
+                    MemoryFragment memoryFragment  = new MemoryFragment();
+                    FragmentManager fragmentManager2 = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction2 = fragmentManager2.beginTransaction();
+                    fragmentTransaction2.replace(R.id.frame_layout_id,memoryFragment);
+                    fragmentTransaction2.commit();
+
                     return true;
 
                 case R.id.walletNavID:
-                    loadwalletfragment();
+                    WalletFragment walletFragment  = new WalletFragment();
+        FragmentManager fragmentManager3 = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction3 = fragmentManager3.beginTransaction();
+        fragmentTransaction3.replace(R.id.frame_layout_id,walletFragment);
+        fragmentTransaction3.commit();
+
                     return true;
             }
             return false;
         }
     };
-
-    private void loadwalletfragment() {
-        MemoryFragment memoryFragment  = new MemoryFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout_id,memoryFragment);
-        fragmentTransaction.commit();
-    }
-
-    private void loadmemoriesfragment() {
-        WalletFragment walletFragment  = new WalletFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout_id,walletFragment);
-        fragmentTransaction.commit();
-    }
 
 
     @Override
