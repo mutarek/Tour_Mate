@@ -123,7 +123,7 @@ public class WeatherActivity extends AppCompatActivity {
                             .append(".png").toString()).into(currentWeatherIcon);
                     currentWeathertemp.setText("Temp: "+weatherResult.getList().get(0).getMain().getTemp()+" °C");
                     currentWeatherWind.setText("Wind :"+weatherResult.getList().get(0).getWind().getSpeed()+" km/h");
-                   // Toast.makeText(WeatherActivity.this, ""+weatherResult.getCity().getCoord().getLat(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(WeatherActivity.this, ""+weatherResult.getCity().getCountry(), Toast.LENGTH_SHORT).show();
                 }
             }
 

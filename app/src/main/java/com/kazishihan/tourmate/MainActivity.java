@@ -2,8 +2,12 @@ package com.kazishihan.tourmate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,9 +20,16 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.kazishihan.tourmate.Fragment.MemoryFragment;
+import com.kazishihan.tourmate.Fragment.TripFragment;
+import com.kazishihan.tourmate.Fragment.WalletFragment;
+import com.kazishihan.tourmate.MapAction.MapsActivity;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private BottomSheet_AddTrip bottomSheet_addTrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +38,25 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        loaddefaultfragment();
+
+        ////// floating button addd trips action
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+
+                bottomSheet_addTrip = new BottomSheet_AddTrip();
+                bottomSheet_addTrip.show(getSupportFragmentManager(),"BootmSheet_addtrip");
+
             }
         });
+
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -45,6 +67,51 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+    private void loaddefaultfragment() {
+        TripFragment tripFragment  = new TripFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout_id,tripFragment);
+        fragmentTransaction.commit();
+    }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.tripNavID:
+                    loaddefaultfragment();
+                    return true;
+                case R.id.memoriesNavID:
+                    loadmemoriesfragment();
+                    return true;
+
+                case R.id.walletNavID:
+                    loadwalletfragment();
+                    return true;
+            }
+            return false;
+        }
+    };
+
+    private void loadwalletfragment() {
+        MemoryFragment memoryFragment  = new MemoryFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout_id,memoryFragment);
+        fragmentTransaction.commit();
+    }
+
+    private void loadmemoriesfragment() {
+        WalletFragment walletFragment  = new WalletFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout_id,walletFragment);
+        fragmentTransaction.commit();
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -92,6 +159,9 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_Nearme) {
 
+           Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+           startActivity(intent);
+
 
         }
         else if (id == R.id.nav_Logout) {
@@ -111,6 +181,7 @@ public class MainActivity extends AppCompatActivity
 
         }
         else if (id == R.id.nav_share) {
+
 
         } else if (id == R.id.nav_send) {
 

@@ -9,12 +9,12 @@
     <item
         android:id="@+id/memoriesNavID"
         android:icon="@drawable/memories_icon"
-        android:title="expense"
+        android:title="Memory"
         ></item>
     <item
         android:id="@+id/walletNavID"
         android:icon="@drawable/ic_account_balance_wallet_black_24dp"
-        android:title="expense"
+        android:title="Walet"
         ></item>
 
 </menu>
