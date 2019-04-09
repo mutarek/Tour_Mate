@@ -26,23 +26,40 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.kazishihan.tourmate.Classes.IndividualTrip;
 
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BottomSheet_AddTrip extends BottomSheetDialogFragment {
 
-    private EditText addTrip, addTripDiscription;
-
+    private EditText addTriptitle, addTripDiscription;
+    private Button addtrip;
     private ImageView fromDateIv, toDateIv;
-    private TextView DateTv,toDateTv;
+    private TextView DateTv, toDateTv;
     private long selectedFromDateinMS;
     private long selectedToDateinMS;
     private String spinnerdata;
-    private RelativeLayout datePicker,timePicker;
+    private RelativeLayout datePicker, timePicker;
+    String addTripFromDate, addTripToDate, postrandomname;
+    private FirebaseAuth firebaseAuth;
+    String currentuser;
+    private DatabaseReference databaseReference, postRef;
 
 
     @Nullable
@@ -50,31 +67,78 @@ public class BottomSheet_AddTrip extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.bottom_add_trip, container, false);
 
-         datePicker = view.findViewById(R.id.datepicklayoutid);
-         timePicker = view.findViewById(R.id.todatepicklayoutid);
-         DateTv = view.findViewById(R.id.opendatepickerTvID);
-         toDateTv = view.findViewById(R.id.toopendatepickerTvID);
+        datePicker = view.findViewById(R.id.datepicklayoutid);
+        timePicker = view.findViewById(R.id.todatepicklayoutid);
+        DateTv = view.findViewById(R.id.opendatepickerTvID);
+        toDateTv = view.findViewById(R.id.toopendatepickerTvID);
+        addTriptitle = view.findViewById(R.id.tripNameId);
+        addTripDiscription = view.findViewById(R.id.tripDescriptionId);
+        addtrip = view.findViewById(R.id.addTrip);
 
-         datePicker.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentuser = firebaseAuth.getCurrentUser().getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("UserList");
+        postRef = FirebaseDatabase.getInstance().getReference().child("UserList").child(currentuser).child("Events");
 
-                 openDatePicker();
-             }
-         });
+        addtrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String triptitle = addTriptitle.getText().toString();
+                String tripDescription = addTripDiscription.getText().toString();
+                addTripFromDate = String.valueOf(selectedFromDateinMS);
+                addTripToDate = String.valueOf(selectedToDateinMS);
 
-         timePicker.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
+                if (triptitle.equals("")) {
+                    Toast.makeText(getContext(), "Please Enter your Event Title", Toast.LENGTH_SHORT).show();
+                } else if (tripDescription.equals("")) {
+                    Toast.makeText(getContext(), "Please Enter a description for your event", Toast.LENGTH_SHORT).show();
+                } else {
+                    InsertDatatoDatabase(triptitle, tripDescription, addTripToDate, addTripFromDate);
+                }
 
-                 openToDatePicker();
+            }
+        });
 
-             }
-         });
+        datePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                openDatePicker();
+            }
+        });
+
+        timePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                openToDatePicker();
+
+            }
+        });
 
 
         return view;
+    }
+
+    private void InsertDatatoDatabase(final String triptitle, final String tripDescription, final String addTripToDate, final String addTripFromDate) {
+        final IndividualTrip individualTrip = new IndividualTrip();
+        individualTrip.setEvent_Description(tripDescription);
+        individualTrip.setEvent_Name(triptitle);
+        individualTrip.setFrom_Date(addTripFromDate);
+        individualTrip.setTo_Date(addTripToDate);
+
+                postRef.child(currentuser + postrandomname).setValue(individualTrip)
+                        .addOnCompleteListener(new OnCompleteListener() {
+                            @Override
+                            public void onComplete(@NonNull Task task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getActivity(), "Event Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getActivity(), "" + task.getException(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        
+    });
     }
 
 
@@ -116,7 +180,7 @@ public class BottomSheet_AddTrip extends BottomSheetDialogFragment {
 
     }
 
-///to date///
+    ///to date///
     private void openToDatePicker() {
 
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -135,7 +199,7 @@ public class BottomSheet_AddTrip extends BottomSheetDialogFragment {
                     e.printStackTrace();
                 }
 
-                selectedFromDateinMS = date.getTime();
+                selectedToDateinMS = date.getTime();
                 toDateTv.setText(dateSDF.format(date));
 
 
@@ -153,7 +217,6 @@ public class BottomSheet_AddTrip extends BottomSheetDialogFragment {
 
 
     }
-
 
 
 }
